@@ -3,38 +3,30 @@ package com.example.myrestapi.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "review")
-public class Review {
-
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(name = "text")
     private String text;
 
-    @OneToOne(mappedBy = "review", orphanRemoval = true)
-    private Comment comment;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Comment getComment() {
-        return comment;
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "review_id")
+    private Review review;
+
+    public Review getReview() {
+        return review;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     public User getUser() {
@@ -45,6 +37,14 @@ public class Review {
         this.user = user;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Long getId() {
         return id;
     }
@@ -52,6 +52,5 @@ public class Review {
     public void setId(Long id) {
         this.id = id;
     }
-
 
 }
