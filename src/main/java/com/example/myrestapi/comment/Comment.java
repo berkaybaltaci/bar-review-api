@@ -1,8 +1,7 @@
-package com.example.myrestapi.entity;
+package com.example.myrestapi.comment;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.example.myrestapi.review.Review;
+import com.example.myrestapi.user.User;
 
 import javax.persistence.*;
 
@@ -21,7 +20,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "review_id")
     private Review review;
 

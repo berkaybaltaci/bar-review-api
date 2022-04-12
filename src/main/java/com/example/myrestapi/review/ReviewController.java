@@ -1,7 +1,5 @@
-package com.example.myrestapi.controller;
+package com.example.myrestapi.review;
 
-import com.example.myrestapi.entity.Review;
-import com.example.myrestapi.service.ReviewService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

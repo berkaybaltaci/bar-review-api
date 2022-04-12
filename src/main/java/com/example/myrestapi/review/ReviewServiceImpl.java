@@ -1,14 +1,12 @@
-package com.example.myrestapi.service;
+package com.example.myrestapi.review;
 
-import com.example.myrestapi.entity.Review;
-import com.example.myrestapi.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Autowired

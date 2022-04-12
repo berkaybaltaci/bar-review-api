@@ -1,7 +1,5 @@
-package com.example.myrestapi.service;
+package com.example.myrestapi.comment;
 
-import com.example.myrestapi.entity.Comment;
-import com.example.myrestapi.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

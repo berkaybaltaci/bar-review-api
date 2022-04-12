@@ -1,6 +1,5 @@
-package com.example.myrestapi.repository;
+package com.example.myrestapi.review;
 
-import com.example.myrestapi.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {

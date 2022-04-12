@@ -1,7 +1,5 @@
-package com.example.myrestapi.repository;
+package com.example.myrestapi.comment;
 
-import com.example.myrestapi.entity.Comment;
-import com.example.myrestapi.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

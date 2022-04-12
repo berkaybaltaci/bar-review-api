@@ -1,4 +1,6 @@
-package com.example.myrestapi.entity;
+package com.example.myrestapi.review;
+
+import com.example.myrestapi.user.User;
 
 import javax.persistence.*;
 
@@ -11,7 +13,7 @@ public class Review {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -1,10 +1,9 @@
-package com.example.myrestapi.service;
-
-import com.example.myrestapi.entity.Review;
+package com.example.myrestapi.review;
 
 import java.util.List;
 
 public interface ReviewService {
     List<Review> getReviews();
+
     Review getReview(Long id);
 }
