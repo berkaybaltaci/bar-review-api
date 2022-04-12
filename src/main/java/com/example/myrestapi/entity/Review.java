@@ -18,17 +18,6 @@ public class Review {
     @Column(name = "text")
     private String text;
 
-    @OneToOne(mappedBy = "review", orphanRemoval = true)
-    private Comment comment;
-
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-
     public String getText() {
         return text;
     }
