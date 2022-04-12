@@ -21,7 +21,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(orphanRemoval = true)
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "review_id")
     private Review review;
 
