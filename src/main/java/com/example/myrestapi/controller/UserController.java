@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class UserController {
-    UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -20,6 +20,7 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();
+
     }
 
     @GetMapping("/users/{id}")
