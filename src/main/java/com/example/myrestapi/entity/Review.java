@@ -1,5 +1,9 @@
 package com.example.myrestapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,22 +15,19 @@ public class Review {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(name = "text")
     private String text;
 
-    @OneToOne(mappedBy = "review", orphanRemoval = true)
-    private Comment comment;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Comment getComment() {
-        return comment;
+    public User getUser() {
+        return user;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getText() {
@@ -35,14 +36,6 @@ public class Review {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Long getId() {
