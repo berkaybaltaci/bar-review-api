@@ -1,10 +1,7 @@
 package com.example.myrestapi.comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,10 @@ public class CommentController {
     @GetMapping("/{id}")
     public Comment getComment(@PathVariable Long id) {
         return commentService.getComment(id);
+    }
+
+    @PostMapping
+    public Comment addComment(@RequestBody Comment comment) {
+        return commentService.addComment(comment);
     }
 }

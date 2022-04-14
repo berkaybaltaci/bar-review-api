@@ -31,9 +31,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review addReview(Review review) {
-        if (userRepository.existsById(review.getUser().getId())) {
-            return reviewRepository.save(review);
+        if (!userRepository.existsById(review.getUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
+        return reviewRepository.save(review);
     }
 }
