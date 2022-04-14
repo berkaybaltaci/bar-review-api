@@ -1,17 +1,22 @@
 package com.example.myrestapi.review;
 
+import com.example.myrestapi.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, UserRepository userRepository) {
         this.reviewRepository = reviewRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -26,6 +31,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review addReview(Review review) {
-        return reviewRepository.save(review);
+        if (userRepository.existsById(review.getUser().getId())) {
+            return reviewRepository.save(review);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
     }
 }
