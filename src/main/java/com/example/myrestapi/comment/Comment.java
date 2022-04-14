@@ -3,18 +3,16 @@ package com.example.myrestapi.comment;
 import com.example.myrestapi.review.Review;
 import com.example.myrestapi.user.User;
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "comment")
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
