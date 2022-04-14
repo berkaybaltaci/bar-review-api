@@ -28,7 +28,7 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }

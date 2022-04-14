@@ -1,5 +1,6 @@
 package com.example.myrestapi.review;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
+    @Autowired
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
@@ -24,7 +26,7 @@ public class ReviewController {
         return reviewService.getReview(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     public Review addReview(@RequestBody Review review) {
         return reviewService.addReview(review);
     }
