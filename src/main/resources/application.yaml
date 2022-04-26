@@ -3,6 +3,10 @@ spring:
     url: jdbc:postgresql://ec2-54-73-152-36.eu-west-1.compute.amazonaws.com:5432/d7a8137vl6ka3j
     username: eheswmouhpgaiz
     password: d250dda83c460e3482308755c59b1929d4f593543211bc907784ee1eb6e6e382
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
 
 server:
   port: 8081
