@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyRestApiApplication {
+public class BarReviewApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MyRestApiApplication.class, args);
+        SpringApplication.run(BarReviewApplication.class, args);
     }
 
 }
