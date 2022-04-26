@@ -6,7 +6,8 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update # burasi update yapilabilir; validate db'yi degistirmiyor
+    generate-ddl: true
 
 server:
   port: 8081

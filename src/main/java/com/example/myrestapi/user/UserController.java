@@ -37,10 +37,9 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
-        if (userService.getUser(id) != null) {
-            userService.deleteUser(id);
-        } else {
+        if (userService.getUser(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
+        userService.deleteUser(id);
     }
 }

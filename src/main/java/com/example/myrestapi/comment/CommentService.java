@@ -8,4 +8,6 @@ public interface CommentService {
     Comment getComment(Long id);
 
     Comment addComment(Comment comment);
+
+    void deleteComment(Long id);
 }
