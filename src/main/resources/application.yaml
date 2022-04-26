@@ -10,6 +10,8 @@ spring:
     generate-ddl: true
 
 server:
-  port: 8081
+  port: 8080
   error:
     include-stacktrace: never
+  servlet:
+    context-path: /api/v1
