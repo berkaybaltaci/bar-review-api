@@ -42,4 +42,17 @@ public class UserController {
         }
         userService.deleteUser(id);
     }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        User userInDb = userService.getUser(id);
+        if (userInDb == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
+        }
+
+        userInDb.setName(user.getName());
+        userService.updateUser(userInDb);
+
+        return userInDb;
+    }
 }
