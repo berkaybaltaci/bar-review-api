@@ -1,8 +1,8 @@
 package com.example.myrestapi.review;
 
+import com.example.myrestapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -12,10 +12,12 @@ import java.util.List;
 @RequestMapping("/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
+    private final UserService userService;
 
     @Autowired
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, UserService userService) {
         this.reviewService = reviewService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -30,6 +32,10 @@ public class ReviewController {
 
     @PostMapping
     public Review addReview(@RequestBody Review review) {
+        if (userService.getUser(review.getUser().getId()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
+        }
+
         return reviewService.addReview(review);
     }
 
