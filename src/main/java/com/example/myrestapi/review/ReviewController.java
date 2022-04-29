@@ -1,5 +1,6 @@
 package com.example.myrestapi.review;
 
+import com.example.myrestapi.user.User;
 import com.example.myrestapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,25 @@ public class ReviewController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
         }
         reviewService.deleteReview(id);
+    }
+
+    @PutMapping("/{id}")
+    public Review updateReview(@PathVariable Long id, @RequestBody Review review) {
+        Review reviewInDb = reviewService.getReview(id);
+
+        if (reviewInDb == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
+        }
+
+        User reviewOwner = userService.getUser(review.getUser().getId());
+        if (reviewOwner == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
+        }
+
+        reviewInDb.setText(review.getText());
+        reviewInDb.setUser(reviewOwner);
+
+        reviewService.updateReview(reviewInDb);
+        return reviewInDb;
     }
 }
