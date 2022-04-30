@@ -1,5 +1,6 @@
 package com.example.myrestapi.review;
 
+import com.example.myrestapi.user.User;
 import com.example.myrestapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,22 +22,42 @@ public class ReviewController {
     }
 
     @GetMapping
-    public List<Review> getReviews() {
-        return reviewService.getReviews();
+    public List<ReviewDto> getReviews() {
+        List<Review> reviewList = reviewService.getReviews();
+        return reviewList.stream().map(reviewService::entityToDto).toList();
     }
 
     @GetMapping("/{id}")
-    public Review getReview(@PathVariable Long id) {
-        return reviewService.getReview(id);
+    public ReviewDto getReview(@PathVariable Long id) {
+        Review review = reviewService.getReview(id);
+        if (review == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
+        }
+        return reviewService.entityToDto(reviewService.getReview(id));
     }
 
     @PostMapping
-    public Review addReview(@RequestBody Review review) {
-        if (userService.getUser(review.getUser().getId()) == null) {
+    public ReviewDto addReview(@RequestBody ReviewDto reviewDto) {
+        if (userService.getUser(reviewDto.getUserId()) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
+        Review reviewInDb = reviewService.addReview(reviewService.dtoToEntity(reviewDto));
+        reviewDto.setId(reviewInDb.getId());
+        return reviewDto;
+    }
 
-        return reviewService.addReview(review);
+    @PutMapping("/{id}")
+    public ReviewDto updateReview(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
+        Review reviewInDb = reviewService.getReview(id);
+        if (reviewInDb == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
+        }
+        if (userService.getUser(reviewDto.getUserId()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
+        }
+        reviewDto.setId(id);
+        reviewService.updateReview(reviewService.dtoToEntity(reviewDto));
+        return reviewDto;
     }
 
     @DeleteMapping("/{id}")

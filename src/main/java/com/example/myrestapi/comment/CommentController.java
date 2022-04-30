@@ -24,24 +24,48 @@ public class CommentController {
     }
 
     @GetMapping
-    public List<Comment> getComments() {
-        return commentService.getComments();
+    public List<CommentDto> getComments() {
+        List<Comment> commentList = commentService.getComments();
+        return commentList.stream().map(commentService::entityToDto).toList();
     }
 
     @GetMapping("/{id}")
-    public Comment getComment(@PathVariable Long id) {
-        return commentService.getComment(id);
+    public CommentDto getComment(@PathVariable Long id) {
+        Comment comment = commentService.getComment(id);
+        if (comment == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with the given id is not found.");
+        }
+        return commentService.entityToDto(commentService.getComment(id));
     }
 
     @PostMapping
-    public Comment addComment(@RequestBody Comment comment) {
-        if (userService.getUser(comment.getUser().getId()) == null) {
+    public CommentDto addComment(@RequestBody CommentDto commentDto) {
+        if (userService.getUser(commentDto.getUserId()) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
-        if (reviewService.getReview(comment.getReview().getId()) == null) {
+        if (reviewService.getReview(commentDto.getReviewId()) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
         }
-        return commentService.addComment(comment);
+        Comment commentInDb = commentService.addComment(commentService.dtoToEntity(commentDto));
+        commentDto.setId(commentInDb.getId());
+        return commentDto;
+    }
+
+    @PutMapping("/{id}")
+    public CommentDto updateComment(@PathVariable Long id, @RequestBody CommentDto commentDto) {
+        Comment commentInDb = commentService.getComment(id);
+        if (commentInDb == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with the given id is not found.");
+        }
+        if (userService.getUser(commentDto.getUserId()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with the given id is not found.");
+        }
+        if (reviewService.getReview(commentDto.getReviewId()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with the given id is not found.");
+        }
+        commentDto.setId(id);
+        commentService.updateComment(commentService.dtoToEntity(commentDto));
+        return commentDto;
     }
 
     @DeleteMapping("/{id}")

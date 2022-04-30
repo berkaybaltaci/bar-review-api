@@ -10,4 +10,10 @@ public interface ReviewService {
     Review addReview(Review review);
 
     void deleteReview(Long id);
+
+    void updateReview(Review review);
+
+    ReviewDto entityToDto(Review review);
+
+    Review dtoToEntity (ReviewDto reviewDto);
 }
