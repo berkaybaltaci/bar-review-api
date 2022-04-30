@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.awt.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -20,19 +21,22 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getUsers();
-
+    public List<UserDto> getUsers() {
+        List<User> userList = userService.getUsers();
+        return userList.stream().map(userService::entityToDto).toList();
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUser(id);
+    public UserDto getUser(@PathVariable Long id) {
+        User user = userService.getUser(id);
+        return userService.entityToDto(user);
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public UserDto addUser(@RequestBody UserDto userDto) {
+        User user = userService.dtoToEntity(userDto);
+        userService.addUser(user);
+        return userDto;
     }
 
     @DeleteMapping("/{id}")
@@ -44,15 +48,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         User userInDb = userService.getUser(id);
         if (userInDb == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
 
-        userInDb.setName(user.getName());
+        userInDb.setName(userDto.getName());
         userService.updateUser(userInDb);
 
-        return userInDb;
+        return userDto;
     }
 }

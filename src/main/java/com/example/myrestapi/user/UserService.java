@@ -12,4 +12,10 @@ public interface UserService {
     void deleteUser(Long id);
 
     User updateUser(User user);
+
+    UserDto entityToDto(User user);
+
+    User dtoToEntity(UserDto userDto);
+
+
 }
