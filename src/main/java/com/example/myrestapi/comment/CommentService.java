@@ -11,4 +11,10 @@ public interface CommentService {
 
     void deleteComment(Long id);
 
+    void updateComment(Comment comment);
+
+    CommentDto entityToDto(Comment comment);
+
+    Comment dtoToEntity(CommentDto commentDto);
+
 }

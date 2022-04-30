@@ -11,5 +11,9 @@ public interface ReviewService {
 
     void deleteReview(Long id);
 
-    Review updateReview(Review review);
+    void updateReview(Review review);
+
+    ReviewDto entityToDto(Review review);
+
+    Review dtoToEntity (ReviewDto reviewDto);
 }

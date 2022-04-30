@@ -29,13 +29,18 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable Long id) {
         User user = userService.getUser(id);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
+
+        }
         return userService.entityToDto(user);
     }
 
     @PostMapping
     public UserDto addUser(@RequestBody UserDto userDto) {
         User user = userService.dtoToEntity(userDto);
-        userService.addUser(user);
+        User userInDb = userService.addUser(user);
+        userDto.setId(userInDb.getId());
         return userDto;
     }
 
