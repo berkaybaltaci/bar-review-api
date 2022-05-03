@@ -4,6 +4,8 @@ import com.example.myrestapi.review.ReviewService;
 import com.example.myrestapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,6 +41,7 @@ public class CommentController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public CommentDto addComment(@RequestBody CommentDto commentDto) {
         if (userService.getUser(commentDto.getUserId()) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
@@ -52,6 +55,7 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("principal == @commentServiceImpl.getComment(#id).user.name")
     public CommentDto updateComment(@PathVariable Long id, @RequestBody CommentDto commentDto) {
         Comment commentInDb = commentService.getComment(id);
         if (commentInDb == null) {
@@ -69,6 +73,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("principal == @commentServiceImpl.getComment(#id).user.name")
     public void deleteComment(@PathVariable Long id) {
         if (commentService.getComment(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment with the given id is not found.");
