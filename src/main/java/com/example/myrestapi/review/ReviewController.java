@@ -1,12 +1,13 @@
 package com.example.myrestapi.review;
 
-import com.example.myrestapi.user.User;
 import com.example.myrestapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -37,16 +38,19 @@ public class ReviewController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ReviewDto addReview(@RequestBody ReviewDto reviewDto) {
         if (userService.getUser(reviewDto.getUserId()) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
         Review reviewInDb = reviewService.addReview(reviewService.dtoToEntity(reviewDto));
         reviewDto.setId(reviewInDb.getId());
+        // TODO: Set user id here instead of receiving it from the body
         return reviewDto;
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("principal == @reviewServiceImpl.getReview(#id).user.name")
     public ReviewDto updateReview(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
         Review reviewInDb = reviewService.getReview(id);
         if (reviewInDb == null) {
@@ -61,6 +65,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("principal == @reviewServiceImpl.getReview(#id).user.name")
     public void deleteReview(@PathVariable Long id) {
         if (reviewService.getReview(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
