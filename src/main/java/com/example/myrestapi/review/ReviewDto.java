@@ -3,6 +3,7 @@ package com.example.myrestapi.review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 
@@ -10,7 +11,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewDto implements Serializable {
+
     private Long id;
+
     private String text;
+
     private Long userId;
 }

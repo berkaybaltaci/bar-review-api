@@ -4,6 +4,7 @@ import com.example.myrestapi.user.User;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
