@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,22 +35,13 @@ public class UserController {
         User user = userService.getUser(id);
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
-
         }
         return userService.entityToDto(user);
     }
 
-    @PostMapping
-    public User addUser(@RequestBody User user) {
-        // TODO: Add password encoder
-        User userInDb = userService.addUser(user);
-        user.setId(userInDb.getId());
-        return user;
-    }
-
     @PutMapping("/{id}")
-    @PreAuthorize("principal == 'ADMIN' || principal == @userServiceImpl.getUser(id).name")
-    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+    @PreAuthorize("principal == 'ADMIN' || principal == @userServiceImpl.getUser(#id).name")
+    public UserDto updateUser(@PathVariable Long id, @RequestBody @Valid UserDto userDto) {
         User userInDb = userService.getUser(id);
         if (userInDb == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
@@ -58,11 +50,12 @@ public class UserController {
         userInDb.setName(userDto.getName());
         userService.updateUser(userInDb);
 
+        userDto.setId(id);
         return userDto;
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("principal == 'ADMIN' || principal == @userServiceImpl.getUser(id).name")
+    @PreAuthorize("principal == 'ADMIN' || principal == @userServiceImpl.getUser(#id).name")
     public void deleteUser(@PathVariable Long id) {
         if (userService.getUser(id) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
