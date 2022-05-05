@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -14,6 +15,7 @@ public class ReviewDto implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String text;
 
     private Long userId;

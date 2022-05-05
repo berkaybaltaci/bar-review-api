@@ -17,5 +17,5 @@ public interface UserService {
 
     User dtoToEntity(UserDto userDto);
 
-
+    User findUserByName(String username);
 }

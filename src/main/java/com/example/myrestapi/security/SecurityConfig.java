@@ -1,6 +1,7 @@
 package com.example.myrestapi.security;
 
 import com.example.myrestapi.auth.JwtRequestFilter;
+import com.example.myrestapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,19 +23,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userService;
     private final PasswordEncoder passwordEncoder;
-    private final JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userService, PasswordEncoder passwordEncoder, JwtRequestFilter jwtRequestFilter) {
+    public SecurityConfig(UserDetailsService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public JwtRequestFilter jwtRequestFilter() throws Exception {
+        return new JwtRequestFilter(authenticationManagerBean(), (UserService) userService);
     }
 
     @Override
@@ -50,6 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

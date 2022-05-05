@@ -65,6 +65,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findUserByName(String username) {
+        return userRepository.findUserByName(username);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
 
