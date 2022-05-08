@@ -7,10 +7,12 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "review")
+@Table(name = "`review`")
 @Getter
 @Setter
 @ToString
@@ -32,4 +34,10 @@ public class Review {
     @Column(name = "text")
     @NotNull
     private String text;
+
+    @Column(name = "rating")
+    @NotNull
+    @Min(1)
+    @Max(5)
+    private int rating;
 }

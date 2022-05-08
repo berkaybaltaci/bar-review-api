@@ -48,6 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDto.setText(review.getText());
         reviewDto.setId(review.getId());
         reviewDto.setUserId(review.getUser().getId());
+        reviewDto.setRating(review.getRating());
 
         return reviewDto;
     }
@@ -58,6 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setText(reviewDto.getText());
         review.setUser(userRepository.getById(reviewDto.getUserId()));
         review.setId(reviewDto.getId());
+        review.setRating(reviewDto.getRating());
 
         return review;
     }

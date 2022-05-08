@@ -44,14 +44,13 @@ public class ReviewController {
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ReviewDto addReview(@RequestBody @Valid ReviewDto reviewDto) {
-        if (userService.getUser(reviewDto.getUserId()) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
-        }
-        reviewDto.setId(0L);
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         Long userId = userService.findUserByName(userName).getId();
+
+        reviewDto.setId(0L);
         reviewDto.setUserId(userId);
-        reviewService.addReview(reviewService.dtoToEntity(reviewDto));
+        Review reviewInDb = reviewService.addReview(reviewService.dtoToEntity(reviewDto));
+        reviewDto.setId(reviewInDb.getId());
         return reviewDto;
     }
 
@@ -61,9 +60,6 @@ public class ReviewController {
         Review reviewInDb = reviewService.getReview(id);
         if (reviewInDb == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review with the given id is not found.");
-        }
-        if (userService.getUser(reviewDto.getUserId()) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with the given id is not found.");
         }
         reviewDto.setId(id);
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
