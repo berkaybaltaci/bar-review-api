@@ -24,4 +24,5 @@ public class ReviewDto implements Serializable {
     @Min(1)
     @Max(5)
     private int rating;
+
 }

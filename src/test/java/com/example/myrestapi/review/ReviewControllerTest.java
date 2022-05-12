@@ -22,9 +22,30 @@ class ReviewControllerTest {
 
     @Test
     void getReviews() throws Exception {
+
+        /**
+         * sirasiyla:
+         * username pass'la authentication'a request at tokeni al
+         * tokenle post request at olustur
+         * olusturdugunun userIdsini vs. kontrol et
+         */
+
+        ReviewDto reviewToPost = new ReviewDto();
+        reviewToPost.setUserId(2L);
+        reviewToPost.setText("review post by mockmvc");
+        reviewToPost.setRating(4);
+
         mvc.perform(MockMvcRequestBuilders
-                .get("/reviews")
-                .accept(MediaType.APPLICATION_JSON))
+                        .post("/reviews")
+                        .content("{\"text\": \"review post by mockmvc\", \"rating\": \"4\"} ")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",
+                                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb2huIiwiaXNzIjoiYmFyLXJldmlldy1hcGkifQ.fru0ViG0Z7d1RhVZPs96uIiBi7hpFJZGeoSF9cA5lZM"))
+                .andExpect(status().isOk());
+
+        mvc.perform(MockMvcRequestBuilders
+                        .get("/reviews")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
 //                .andExpect(jsonPath("$[0].id").value("44"));
