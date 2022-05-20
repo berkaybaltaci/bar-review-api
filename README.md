@@ -5,7 +5,8 @@ An API to be used with a front end SPA that lets users create, read, update, del
 Developed using Spring Boot, PostgreSQL and an implementation of JWT tokens for authentication/authorization.
 
 1) Install Maven dependencies.
-2) Compile and run /src/main/java/com/berkaybaltaci/myrestapi/CafeReviewApplication.java
+2) Configure your own mySecrets.properties file with appropriate database credentials.
+3) Compile and run /src/main/java/com/berkaybaltaci/myrestapi/CafeReviewApplication.java
 
 Docs: https://app.swaggerhub.com/apis-docs/berkaybaltaci1/cafe-review-api/1.0.0
 
