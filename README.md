@@ -1,6 +1,6 @@
 # cafe-review-api
 
-An API to be used with a front end SPA that lets users create, read, update, delete reviews and comments about cafés they have been to.
+A REST API to be used with a front end SPA that lets users create, read, update, delete reviews and comments about cafés they have been to.
 
 Developed using Spring Boot, PostgreSQL and an implementation of JWT tokens for authentication/authorization.
 
