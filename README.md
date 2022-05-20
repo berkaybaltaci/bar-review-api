@@ -2,7 +2,7 @@
 
 An API to be used with a front end SPA that lets users create, read, update, delete reviews and comments about cafés they have been to.
 
-Developed using Spring Boot, PostgreSQL and JWT tokens for authentication/authorization.
+Developed using Spring Boot, PostgreSQL and an implementation of JWT tokens for authentication/authorization.
 
 1) Install Maven dependencies.
 2) Compile and run /src/main/java/com/berkaybaltaci/myrestapi/CafeReviewApplication.java
