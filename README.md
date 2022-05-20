@@ -4,6 +4,9 @@ An API to be used with a front end SPA that lets users create, read, update, del
 
 Developed using Spring Boot, PostgreSQL and an implementation of JWT tokens for authentication/authorization.
 
+Live demo: https://dummy-cafe-api.herokuapp.com/
+Example endpoint: https://dummy-cafe-api.herokuapp.com/api/v1/reviews
+
 1) Install Maven dependencies.
 2) Configure your own mySecrets.properties file with appropriate database credentials.
 3) Compile and run /src/main/java/com/berkaybaltaci/myrestapi/CafeReviewApplication.java
