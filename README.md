@@ -1,4 +1,4 @@
-# bar-review-api
+# cafe-review-api
 
 Docs: https://app.swaggerhub.com/apis-docs/berkaybaltaci1/cafe-review-api/1.0.0
 
